@@ -1,0 +1,67 @@
+# 2
+
+1 Add Abstraction to your project to have hierarchy of your classes
+
+ Address -> ApartmentAddress; HouseAddress
+ Person -> Customer; Recipient; Employee
+
+2 Add at least 1 abstract method to each abstract class
+
+Address getFullAddress
+Person generateID
+
+3 Apply polymorphism in your project
+
+class Invoice
+method generateInvoice - method getFullAddress implemented differently
+for ApartmentAddress and HouseAddress
+
+4 Amount of classes now should be 15 +
+
+5 Don't forget about code convention +
+make some business logic in your project +
+
+6 Code formatting!
+
+1 empty space before class name +++
+No empty space in methods +
+Add space after each method () and curly brace {} +
+Short cut mac: option + command +
+Cmd+Shift+F: to find all usages of project.
+Cmd+ LMB: to see all usages (useful for refactoring, dont change if  its not in our project)
+
+7 Personal
+
+boolean capitalization +
+public for constant, no need in getter, setter +
+use constants for price of delivery +
+count outside store in main or management class +
+add timing +
+
+==================================
+
+Debug
+Create Scanner
+
+===================================
+
+# 3
+
+1 Add 5 Interfaces to your hierarchy
+
+A: Duplicated functionality (e.g. get info for Person and Address)
+B:
+
+1 Implement interface for some Child classes
+2 Create elsewhere method that will call interface method on instances of those classes
+3 Create this method parameters as objects that implement interface rather than class instances e.g.
+
+
+
+2 Add static methods and variable
+
+variables belong to Class rather than Instance of a Class
+Common methods used across the program
+
+3 Add final classes methods and variables
+
