@@ -3,18 +3,19 @@ package com.solvd.deliveryservice.order;
 import com.solvd.deliveryservice.address.Address;
 import com.solvd.deliveryservice.parcel.Parcel;
 import com.solvd.deliveryservice.person.Customer;
+import com.solvd.deliveryservice.person.Id;
 import com.solvd.deliveryservice.person.Recipient;
 import com.solvd.deliveryservice.store.Store;
 
 import java.util.Random;
 
-public class Order {
+public class Order implements Id {
     private Customer customer;
     private Recipient recipient;
     private Address address;
     private Parcel parcel;
     private Store store;
-    private long id;
+    private String id;
     private boolean express;
     private boolean delivered;
 
@@ -47,7 +48,7 @@ public class Order {
         return delivered;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -60,11 +61,11 @@ public class Order {
         this.delivered = delivered;
     }
 
-    private long generateId() {
+    public String generateId() {
         Random random = new Random();
         long currentTime = System.currentTimeMillis();
         int randomInt = random.nextInt(10000);
-        return currentTime + randomInt;
+        return Long.toString(currentTime+ randomInt);
     }
 
     public Order(Customer customer, Recipient recipient, Address address, Parcel parcel, Store store, boolean express) {

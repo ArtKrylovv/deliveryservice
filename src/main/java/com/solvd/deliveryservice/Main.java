@@ -12,7 +12,8 @@ import com.solvd.deliveryservice.payment.Processing;
 import com.solvd.deliveryservice.person.Customer;
 import com.solvd.deliveryservice.person.Employee;
 import com.solvd.deliveryservice.person.Recipient;
-import com.solvd.deliveryservice.store.Store;
+import com.solvd.deliveryservice.store.OnlineStore;
+import com.solvd.deliveryservice.store.PhysicalStore;
 
 import java.util.Arrays;
 
@@ -28,8 +29,13 @@ public class Main {
         HouseAddress storeTwoAddress = new HouseAddress("Washington", "CA", 1);
 
         // creating store
-        Store store1 = new Store(storeOneAddress);
-        Store store2 = new Store(storeTwoAddress);
+        PhysicalStore store1 = new PhysicalStore(storeOneAddress);
+        OnlineStore store2 = new OnlineStore("delivery.com/onlinestore");
+
+
+        //Printing if store is working today, Polymorphism with interfaces
+        System.out.println(store1.workingTodayChecker("Tuesday"));
+        System.out.println(store2.workingTodayChecker("Tuesday"));
 
 
         // polymorphism, abstract method
@@ -100,17 +106,12 @@ public class Main {
         System.out.println(invoice1.generateInvoice(order1)+ " invoice");
         System.out.println(invoice2.generateInvoice(order2)+ " invoice");
 
-        // creating payment
-        Processing payment1 = new Processing(1111111111111111L, invoice1 );
-        Processing payment2 = new Processing(1111111111111111L, invoice2 );
-
         // payment processing
-        payment1.processPayment();
-        payment2.processPayment();
+        Processing.processPayment(1111111111111111L, invoice1);
+        Processing.processPayment(1111111111111111L, invoice2);
 
         // validating new invoice payment status
         System.out.println(invoice1.generateInvoice(order1)+ " invoice");
         System.out.println(invoice2.generateInvoice(order2)+ " invoice");
-
     }
 }
