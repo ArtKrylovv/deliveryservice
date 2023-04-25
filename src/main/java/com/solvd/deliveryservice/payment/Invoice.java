@@ -5,7 +5,7 @@ import com.solvd.deliveryservice.order.Order;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Invoice {
+public class Invoice implements Document{
     public static float SALES_TAX = 0.10F;
     private float totalPriceBeforeTax;
     private float taxAmount;
@@ -14,8 +14,9 @@ public class Invoice {
 
     public Invoice(Price price) {
         this.totalPriceBeforeTax = price.getTotalPrice();
-        this.taxAmount = calculateTaxAmount(price.hashCode());
-        this.totalAfterTax =totalPriceBeforeTax+taxAmount;
+        this.taxAmount = calculateTaxAmount(price.getTotalPrice());
+        // after tax
+        this.totalAfterTax = calculateTotalPriceAfterTax(totalPriceBeforeTax, taxAmount);
         this.paid = false;
     }
 
@@ -43,6 +44,10 @@ public class Invoice {
         return totalAfterBeforeTax*SALES_TAX;
     }
 
+    private float calculateTotalPriceAfterTax(float totalPriceBeforeTax, float taxAmount){
+        return totalPriceBeforeTax + taxAmount;
+    }
+
     public HashMap<String, Object> generateInvoice (Order order) {
         HashMap<String, Object> invoice = new HashMap<>();
         invoice.put("price before tax", getTotalPriceBeforeTax());
@@ -52,5 +57,10 @@ public class Invoice {
         // polymorphism in getFullAddress()
         invoice.put("customer address", Arrays.toString(order.getAddress().getFullAddress()));
         return invoice;
+    }
+
+    @Override
+    public String convertNumericToText(float numeric) {
+        return "Will be implemented later";
     }
 }

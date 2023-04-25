@@ -1,5 +1,7 @@
 package com.solvd.deliveryservice.address;
 
+import com.solvd.deliveryservice.utilities.Utilities;
+
 public abstract class Address {
     final public static String LOCAL_STATE = "CA";
     private String street;
@@ -9,7 +11,8 @@ public abstract class Address {
     public Address(String street, String state, int houseNumber) {
         this.street = street;
         this.houseNumber = houseNumber;
-        if (stateChecker(state)) {
+        // using Utilities final class with static methods
+        if (Utilities.stateChecker(state)) {
             this.state = state;
         } else {
             // update to raise exception
@@ -38,30 +41,15 @@ public abstract class Address {
     }
 
     public void setState(String state) {
-        if (stateChecker(state)) {
+        if (Utilities.stateChecker(state)) {
             this.state = state;
         } else {
             System.out.println("State must be a string of 2 characters");
         }
     }
-
-    // checks if state length == 2
-    private boolean stateChecker (String state) {
-        if (state.length() != 2) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-
-    public boolean checkIfLocalAddress(String state){
-        if (state.equals(LOCAL_STATE)) {
-            return true;
-        } else{
-            return false;
-        }
+    // final class
+    public final boolean checkIfLocalAddress(String state){
+        return state.equals(LOCAL_STATE);
     }
     // abstract
     public abstract String[] getFullAddress();

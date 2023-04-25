@@ -1,13 +1,27 @@
 package com.solvd.deliveryservice.person;
 
-public abstract class Person {
+import com.solvd.deliveryservice.utilities.Utilities;
+
+import java.util.HashMap;
+
+public abstract class Person implements Id {
     private String firstName;
     private String lastName;
     private long phone;
 
     public Person(String firstName, String lastName, long phone) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        if (Utilities.nameChecker(firstName)) {
+            this.firstName = firstName;
+        } else {
+            System.out.println("First Name must contain characters only");
+        }
+
+        if (Utilities.nameChecker(lastName)) {
+            this.lastName = lastName;
+        } else {
+            System.out.println("Last Name must contain characters only");
+        }
+
         this.phone = phone;
     }
 
@@ -35,9 +49,9 @@ public abstract class Person {
     public void setPhone(long phone) {
         this.phone = phone;
     }
+    // abstract method
+    public abstract HashMap<String, Object> getInfo();
 
-    // abstract
-    public abstract String generateId();
 }
 
 

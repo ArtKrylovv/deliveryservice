@@ -2,7 +2,7 @@ package com.solvd.deliveryservice.payment;
 
 import com.solvd.deliveryservice.order.Order;
 
-public class Price {
+public class Price implements Document{
     final public static int LOCAL_PRICE_LB = 5;
     final public static int NATIONAL_PRICE_LB = 10;
     final public static float EXPRESS_MARKUP = 0.1F;
@@ -32,6 +32,11 @@ public class Price {
             expressMarkup+=EXPRESS_MARKUP;
         }
         return expressMarkup;
+    }
+
+    @Override
+    public String convertNumericToText(float numeric) {
+        return "Will be implemented later";
     }
 }
 
