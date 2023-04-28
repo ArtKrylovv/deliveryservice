@@ -1,6 +1,9 @@
 package com.solvd.deliveryservice.person;
 
+import com.solvd.deliveryservice.payment.Processing;
 import com.solvd.deliveryservice.utilities.Utilities;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
@@ -8,18 +11,20 @@ public abstract class Person implements Id {
     private String firstName;
     private String lastName;
     private long phone;
+    private final static Logger LOGGER = LogManager.getLogger(Person.class);
+
 
     public Person(String firstName, String lastName, long phone) {
         if (Utilities.nameChecker(firstName)) {
             this.firstName = firstName;
         } else {
-            System.out.println("First Name must contain characters only");
+            LOGGER.error("First Name must contain characters only");
         }
 
         if (Utilities.nameChecker(lastName)) {
             this.lastName = lastName;
         } else {
-            System.out.println("Last Name must contain characters only");
+            LOGGER.error("First Name must contain characters only");
         }
 
         this.phone = phone;
@@ -51,7 +56,6 @@ public abstract class Person implements Id {
     }
     // abstract method
     public abstract HashMap<String, Object> getInfo();
-
 }
 
 

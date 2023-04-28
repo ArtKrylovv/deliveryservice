@@ -1,17 +1,25 @@
 package com.solvd.deliveryservice.parcel;
 
+import com.solvd.deliveryservice.address.Address;
+import com.solvd.deliveryservice.exceptions.ParcelDimensionsException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Parcel {
     private String description;
     private int weight;
     private int[] dimensions;
+    private final static Logger LOGGER = LogManager.getLogger(Parcel.class);
 
     public Parcel(String description, int weight, int[] dimensions) {
         this.description = description;
         this.weight = weight;
         if(dimensionsChecker(dimensions)) {
             this.dimensions = dimensions;
-        }else{
-           System.out.println("All dimensions must be positive integers");
+        }else {
+            LOGGER.error("All dimensions must be positive integers");
+            throw new ParcelDimensionsException("All dimensions must be positive integers");
+
         }
     }
 
@@ -39,7 +47,8 @@ public class Parcel {
         if(dimensionsChecker(dimensions)) {
             this.dimensions = dimensions;
         }else{
-            System.out.println("All dimensions must be positive integers");
+            LOGGER.error("All dimensions must be positive integers");
+            throw new ParcelDimensionsException("All dimensions must be positive integers");
         }
     }
 
@@ -53,11 +62,12 @@ public class Parcel {
     }
 
     private boolean dimensionsChecker (int[] dimensions) {
+        boolean status = true;
         for (int dimension : dimensions) {
             if (dimension <= 0) {
-                return false;
-                }
+                status = false;
             }
-        return true;
+        }
+        return status;
     }
 }

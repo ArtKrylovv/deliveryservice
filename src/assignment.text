@@ -65,3 +65,24 @@ Common methods used across the program
 
 3 Add final classes methods and variables
 
+===================================
+
+# 4
+
+1 Add 5 custom exception and use them in logic +++
+
+Class Payment - CardException
+Class Address - StateNameException
+Class Parcel - ParcelDimensionsException
+Class Discount - InvalidDiscountException
+Class Physical/Online Store - InvalidDayOfTheWeekException
+
+2 Add logger with config to your project +++
+3 Replace all System.out.print(ln)  in your code with appropriate logger message +++
+
+Address
+Parcel
+Discount
+Processing
+Person
+Physical/Online Store

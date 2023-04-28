@@ -7,6 +7,7 @@ public class Customer extends Person {
     private String id;
     private boolean veteranStatus;
 
+    // reduce arguments to 3 max
     public Customer(String firstName, String lastName, long phone, boolean veteranStatus) {
         super(firstName, lastName, phone);
         this.id = generateId();
@@ -26,7 +27,7 @@ public class Customer extends Person {
     }
 
     public void setId(String id) {
-        this.id = generateId();
+        this.id =id;
     }
 
     @Override

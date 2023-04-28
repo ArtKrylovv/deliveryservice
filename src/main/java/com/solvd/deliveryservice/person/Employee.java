@@ -16,7 +16,7 @@ public class Employee extends Person {
     }
 
     public void setId(String id) {
-        this.id = generateId();
+        this.id =id;
     }
 
     @Override

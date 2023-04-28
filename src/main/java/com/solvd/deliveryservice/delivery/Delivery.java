@@ -7,10 +7,7 @@ public class Delivery {
     final public static int NATIONAL_LEAD_TIME_DAYS = 3;
     final public static int EXPRESS_FACTOR = -1;
 
-    public Delivery() {
-    }
-
-    public int getLeadTime(Order order){
+    public static int getLeadTime(Order order){
         int expressOrder = order.isExpress()? 1:0;
         if(order.getAddress().checkIfLocalAddress(order.getAddress().getState())) {
             return LOCAL_LEAD_TIME_DAYS + expressOrder*EXPRESS_FACTOR;

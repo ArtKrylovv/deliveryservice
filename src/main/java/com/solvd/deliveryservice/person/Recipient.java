@@ -13,7 +13,7 @@ public class Recipient extends Person {
     }
 
     public void setId(String id) {
-        this.id = generateId();
+        this.id =id;
     }
 
     public String getId() {

@@ -21,6 +21,7 @@ public class ApartmentAddress extends Address {
     }
 
     public ApartmentAddress(String street, String state, int house, int apt, int callBoxNumber) {
+        // reduce arguments to 3 max
         super(street, state, house);
         this.aptNumber = apt;
         this.callBoxNumber = callBoxNumber;

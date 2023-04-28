@@ -16,10 +16,18 @@ import com.solvd.deliveryservice.store.OnlineStore;
 import com.solvd.deliveryservice.store.PhysicalStore;
 
 import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
 
+    // creates logger
+    private final static Logger LOGGER = LogManager.getLogger(Main.class);
     public static void main(String[] args) {
+
+        LOGGER.info("Starting service");
+
+
         // creating addresses
         HouseAddress senderOneAddress = new HouseAddress("Main", "CA", 1);
         HouseAddress senderTwoAddress = new HouseAddress("Lincoln", "NY", 1);
@@ -35,7 +43,8 @@ public class Main {
 
         //Printing if store is working today, Polymorphism with interfaces
         System.out.println(store1.workingTodayChecker("Tuesday"));
-        System.out.println(store2.workingTodayChecker("Tuesday"));
+        //Throws error
+//        System.out.println(store2.workingTodayChecker("Moonday"));
 
 
         // polymorphism, abstract method
@@ -70,8 +79,14 @@ public class Main {
         int[] dimensions2 = {6,6,6};
         Parcel parcel2 = new Parcel("book", 1, dimensions2);
 
+
+        int[] dimensions3 = {0,6,6};
+        //Throws error
+//        Parcel parcel3 = new Parcel("book", 1, dimensions3);
+
         System.out.println(parcel1.calculateVolume()+ " parcel volume");
         System.out.println(parcel2.calculateVolume()+ " parcel volume");
+
 
         // creating orders
         Order order1 = new Order(customerOne, recipientOne, recipientOneAddress, parcel1, store1, false);
@@ -108,7 +123,8 @@ public class Main {
 
         // payment processing
         Processing.processPayment(1111111111111111L, invoice1);
-        Processing.processPayment(1111111111111111L, invoice2);
+        // throws exception
+//        Processing.processPayment(111111111111111L, invoice2);
 
         // validating new invoice payment status
         System.out.println(invoice1.generateInvoice(order1)+ " invoice");
