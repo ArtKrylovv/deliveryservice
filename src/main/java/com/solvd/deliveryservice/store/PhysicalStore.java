@@ -32,9 +32,9 @@ public class PhysicalStore extends Store{
         }
 
         if(currentDayOfTheWeek.equals("Sunday")) {
-            return "Sorry we are closed till 8 am tomorrow";
+            return "Sorry, we are closed till 8 am tomorrow!";
         } else {
-            return "We are open!";
+            return "We are open today!";
         }
     }
 

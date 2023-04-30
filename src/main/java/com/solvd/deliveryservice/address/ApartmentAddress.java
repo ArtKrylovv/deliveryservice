@@ -20,21 +20,20 @@ public class ApartmentAddress extends Address {
         this.callBoxNumber = callBoxNumber;
     }
 
-    public ApartmentAddress(String street, String state, int house, int apt, int callBoxNumber) {
+    public ApartmentAddress(String street, int house, int apt, String city, String state) {
         // reduce arguments to 3 max
-        super(street, state, house);
+        super(street, state, house, city);
         this.aptNumber = apt;
-        this.callBoxNumber = callBoxNumber;
     }
 
     @Override
     public String [] getFullAddress() {
         String [] fullAddress = new String[5];
         fullAddress[0] = getStreet();
-        fullAddress[1] = Integer.toString(getHouseNumber());
-        fullAddress[2] = getState();
-        fullAddress[3] = Integer.toString(getAptNumber());
-        fullAddress[4] = Integer.toString(getCallBoxNumber());
+        fullAddress[1] = Integer.toString(getAptNumber());
+        fullAddress[2] = Integer.toString(getHouseNumber());
+        fullAddress[3] = getCity();
+        fullAddress[4] = getState();
         return fullAddress;
     }
 }
