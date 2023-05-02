@@ -6,17 +6,21 @@ import com.solvd.deliveryservice.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+
 public abstract class Address {
     final public static String LOCAL_STATE = "CA";
     private String street;
     private String state;
     private int houseNumber;
+    private String city;
     // creates logger
     private final static Logger LOGGER = LogManager.getLogger(Address.class);
 
-    public Address(String street, String state, int houseNumber) {
+    public Address(String street, String state, int houseNumber, String city) {
         this.street = street;
         this.houseNumber = houseNumber;
+        this.city = city;
         // using Utilities final class with static methods
         if (Utilities.stateChecker(state)) {
             this.state = state;
@@ -24,6 +28,10 @@ public abstract class Address {
             LOGGER.error("State name must be a string of 2 characters length");
             throw new StateNameException("State name must be a string of 2 characters length");
         }
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public String getStreet() {
@@ -36,6 +44,10 @@ public abstract class Address {
 
     public int getHouseNumber() {
         return houseNumber;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setHouseNumber(int houseNumber) {
@@ -63,6 +75,6 @@ public abstract class Address {
         return state.equals(LOCAL_STATE);
     }
     // abstract
-    public abstract String[] getFullAddress();
+    public abstract ArrayList<String > getFullAddress();
 }
 

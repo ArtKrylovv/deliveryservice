@@ -28,11 +28,11 @@ public class Employee extends Person {
     }
 
     @Override
-    public HashMap<String, Object> getInfo() {
-        HashMap<String, Object> info = new HashMap<>();
+    public HashMap<String, String> getInfo() {
+        HashMap<String, String> info = new HashMap<>();
         info.put("fist name", getFirstName());
         info.put("last name", getLastName());
-        info.put("phone", getPhone());
+        info.put("phone", Long.toString(getPhone()));
         info.put("id", getId());
         return info;
     }

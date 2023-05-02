@@ -1,40 +1,34 @@
 package com.solvd.deliveryservice.address;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class ApartmentAddress extends Address {
     private int aptNumber;
-    private int callBoxNumber;
+
+
+    public ApartmentAddress(String street, int house, String city, String state) {
+        // reduce arguments to 3 max
+        super(street, state, house, city);
+    }
 
     public int getAptNumber() {
         return aptNumber;
-    }
-
-    public int getCallBoxNumber() {
-        return callBoxNumber;
     }
 
     public void setAptNumber(int aptNumber) {
         this.aptNumber = aptNumber;
     }
 
-    public void setCallBoxNumber(int callBoxNumber) {
-        this.callBoxNumber = callBoxNumber;
-    }
-
-    public ApartmentAddress(String street, String state, int house, int apt, int callBoxNumber) {
-        // reduce arguments to 3 max
-        super(street, state, house);
-        this.aptNumber = apt;
-        this.callBoxNumber = callBoxNumber;
-    }
-
     @Override
-    public String [] getFullAddress() {
-        String [] fullAddress = new String[5];
-        fullAddress[0] = getStreet();
-        fullAddress[1] = Integer.toString(getHouseNumber());
-        fullAddress[2] = getState();
-        fullAddress[3] = Integer.toString(getAptNumber());
-        fullAddress[4] = Integer.toString(getCallBoxNumber());
+    public ArrayList<String> getFullAddress(){
+        ArrayList<String> fullAddress = new ArrayList<>();
+        fullAddress.add(Integer.toString(getHouseNumber()));
+        fullAddress.add((getStreet()));
+        fullAddress.add(Integer.toString(getAptNumber()));
+        fullAddress.add(getCity());
+        fullAddress.add(getState());
         return fullAddress;
     }
 }

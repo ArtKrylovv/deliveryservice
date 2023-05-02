@@ -1,8 +1,10 @@
 package com.solvd.deliveryservice;
 
+import com.solvd.deliveryservice.address.Address;
 import com.solvd.deliveryservice.address.ApartmentAddress;
 import com.solvd.deliveryservice.address.HouseAddress;
 import com.solvd.deliveryservice.delivery.Delivery;
+import com.solvd.deliveryservice.input.Input;
 import com.solvd.deliveryservice.order.Order;
 import com.solvd.deliveryservice.parcel.Parcel;
 import com.solvd.deliveryservice.payment.Discount;
@@ -15,7 +17,13 @@ import com.solvd.deliveryservice.person.Recipient;
 import com.solvd.deliveryservice.store.OnlineStore;
 import com.solvd.deliveryservice.store.PhysicalStore;
 
+import java.awt.*;
+import java.time.DayOfWeek;
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.HashMap;
+
+import com.solvd.deliveryservice.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,111 +31,210 @@ public class Main {
 
     // creates logger
     private final static Logger LOGGER = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
 
         LOGGER.info("Starting service");
 
+        // existing stores
+        HouseAddress storeOneAddress = new HouseAddress("Lincoln", 1000, "Los Angeles", "CA");
+        HouseAddress storeTwoAddress = new HouseAddress("Main", 2000, "San Diego", "CA");
 
-        // creating addresses
-        HouseAddress senderOneAddress = new HouseAddress("Main", "CA", 1);
-        HouseAddress senderTwoAddress = new HouseAddress("Lincoln", "NY", 1);
-        ApartmentAddress recipientOneAddress = new ApartmentAddress("Main", "CA", 1, 100, 100);
-        ApartmentAddress recipientTwoAddress = new ApartmentAddress("Lincoln", "NY", 1, 100, 100);
-        HouseAddress storeOneAddress = new HouseAddress("Washington", "CA", 1);
-        HouseAddress storeTwoAddress = new HouseAddress("Washington", "CA", 1);
-
-        // creating store
         PhysicalStore store1 = new PhysicalStore(storeOneAddress);
-        OnlineStore store2 = new OnlineStore("delivery.com/onlinestore");
+        PhysicalStore store2 = new PhysicalStore(storeTwoAddress);
 
+        // enables user to exit console app
+        boolean exit = false;
 
-        //Printing if store is working today, Polymorphism with interfaces
-        System.out.println(store1.workingTodayChecker("Tuesday"));
-        //Throws error
-//        System.out.println(store2.workingTodayChecker("Moonday"));
+        // console block
+        //TODO: Add InvalidNameException, NegativeTesting, Refactoring
+        while (!exit) {
 
+            boolean storeSelection = false;
+            boolean userCreation = false;
+            boolean recipientCreation = false;
+            boolean deliveryAddressCreation = false;
+            boolean parcelCreation = false;
+            boolean orderCreation = false;
+            boolean paymentProcessing = false;
 
-        // polymorphism, abstract method
-        System.out.println(Arrays.toString(senderOneAddress.getFullAddress()));
-        System.out.println(Arrays.toString(recipientTwoAddress.getFullAddress()));
+            // GREETING
+            System.out.println("************* WELCOME TO USPX DELIVERY *************");
+            System.out.println();
 
-        // custom method
-        System.out.println(senderOneAddress.checkIfLocalAddress("CA")+ " local address");
-        System.out.println(senderOneAddress.checkIfLocalAddress("NY")+ " local address");
+            // STORE SELECTION
+            PhysicalStore selectedStore = null; // check why I need to explicitly set it to null
+            System.out.println("Please Input Store Number or Input \"Exit\" To Quit:");
+            System.out.println();
 
-        // creating customers
-        Customer customerOne = new Customer("Art", "Krylov", 11111111111L, false);
-        Customer customerTwo = new Customer("George", "Patton", 11111111111L, true);
+            while (!exit && !storeSelection) {
 
-        //creating recipients
-        Recipient recipientOne = new Recipient("Oxana", "Krylov", 11111111111L);
-        Recipient recipientTwo = new Recipient("Harry", "Truman", 11111111111L);
+                String selectedStoreNumber = Input.getString("#1 " + Utilities.ArrayListToString(store1.getAddress().getFullAddress()) + "\n#2 " + Utilities.ArrayListToString(store2.getAddress().getFullAddress()));
 
-        //creating employees
-        Employee employeeOne = new Employee("Elon", "Musk", 11111111111L);
-        Employee employeeTwo = new Employee("Jeff", "Bezos", 11111111111L);
+                if (selectedStoreNumber.equals("Exit")) {
+                    exit = true;
+                    System.out.println("Goodbye!");
+                } else if (selectedStoreNumber.equals("1")) {
+                    selectedStore = store1;
+                    System.out.println(selectedStore.workingTodayChecker(Utilities.getDayOfTheWeek()));
+                    storeSelection = true;
 
-        // polymorphism, abstract method
-        System.out.println(customerOne.getId()+ " id");
-        System.out.println(recipientOne.getId()+ " id");
-        System.out.println(employeeOne.getId()+ " id");
+                } else if (selectedStoreNumber.equals("2")) {
+                    selectedStore = store2;
+                    System.out.println(selectedStore.workingTodayChecker(Utilities.getDayOfTheWeek()));
+                    storeSelection = true;
+                } else {
+                    System.out.println("!!! Wrong entry !!!");
+                }
+            }
 
-        //creating parcel
-        int[] dimensions1 = {5,5,5};
-        Parcel parcel1 = new Parcel("flowers", 1, dimensions1);
+            // USER CREATION
+            Customer customer = null;
+            while (!exit && !userCreation) {
+                try {
+                    String customerFirstName = Input.getString("\nPlease input your FIRST NAME:");
+                    String customerLastName = Input.getString("Please input your LAST NAME:");
+                    long customerPhone = Input.getLong("Please input your PHONE (numbers only):");
+                    boolean veteranStatus = Input.getBoolean("Please input \"true\" if you are a veteran and \"false\" if not:");
+                    customer = new Customer(customerFirstName, customerLastName, customerPhone);
+                    customer.setVeteranStatus(veteranStatus);
+                    userCreation = true;
+                } catch (Exception e) {
+                    System.out.println("!!! Wrong entry !!!");
+                }
+            }
+            // RECIPIENT CREATION
+            Recipient recipient = null;
+            while (!exit && !recipientCreation) {
+                try {
+                    String recipientFirstName = Input.getString("Please input recipient FIRST NAME:");
+                    String recipientLastName = Input.getString("Please input recipient LAST NAME:");
+                    long recipientPhone = Input.getLong("Please input recipient PHONE (numbers only):");
+                    recipient = new Recipient(recipientFirstName, recipientLastName, recipientPhone);
+                    recipientCreation = true;
+                } catch (Exception e) {
+                    System.out.println("!!! Wrong entry !!!");
+                }
+            }
+            // DELIVERY ADDRESS CREATION
+            String addressType = "none";
+            Address deliveryAddress = null;
 
-        int[] dimensions2 = {6,6,6};
-        Parcel parcel2 = new Parcel("book", 1, dimensions2);
+            while (!exit && addressType.equals("none")) {
+                String addressTypeInput = Input.getString("Please input recipient address type \"Apartment\" or \"House\"");
+                if (addressTypeInput.equals("Apartment") | addressTypeInput.equals("House")) {
+                    addressType = addressTypeInput;
+                } else {
+                    System.out.println("!!! Wrong entry !!!");
+                }
+            }
+            while (!exit & !deliveryAddressCreation) {
+                if (addressType.equals("House")) {
+                    try {
+                        System.out.println("Please provide delivery address");
+                        String street = Input.getString("Please input Street:");
+                        int house = Input.getInt("Please input house #:");
+                        String city = Input.getString("Please input city:");
+                        String state = Input.getString("Please input state, e.g \"CA\" for California:");
+                        deliveryAddress = new HouseAddress(street, house, city, state);
+                        deliveryAddressCreation = true;
+                    } catch (Exception e) {
+                        System.out.println("!!! Wrong entry !!!");
+                    }
 
+                } else {
+                    try {
+                        System.out.println("Please provide delivery address");
+                        String street = Input.getString("Please input Street:");
+                        int house = Input.getInt("Please input house #:");
+                        int apt = Input.getInt("Please input apartment #:");
+                        String city = Input.getString("Please input city:");
+                        String state = Input.getString("Please input state, e.g \"CA\" for California:");
+                        deliveryAddress = new ApartmentAddress(street, house, city, state);
+                        ((ApartmentAddress) deliveryAddress).setAptNumber(apt);
+                        deliveryAddressCreation = true;
+                    } catch (Exception e) {
+                        System.out.println("!!! Wrong entry !!!");
+                    }
 
-        int[] dimensions3 = {0,6,6};
-        //Throws error
-//        Parcel parcel3 = new Parcel("book", 1, dimensions3);
+                }
+            }
+            // CHECK POINT 1
+            // Implement later
 
-        System.out.println(parcel1.calculateVolume()+ " parcel volume");
-        System.out.println(parcel2.calculateVolume()+ " parcel volume");
+            // PARCEL CREATION
+            Parcel parcel = null;
+            while (!exit && !parcelCreation) {
+                try {
+                    String description = Input.getString("Please input parcel description");
+                    int weight = Input.getInt("Please input parcel weight in lbs (rounded to whole numbers):");
+                    int h = Input.getInt("Please input parcel height in inches (rounded to whole numbers):");
+                    int w = Input.getInt("Please input parcel width in inches (rounded to whole numbers):");
+                    int d = Input.getInt("Please input parcel depth in inches (rounded to whole numbers):");
+                    int[] dimensions = {h, w, d};
+                    parcel = new Parcel(description, weight, dimensions);
+                    parcelCreation = true;
+                    System.out.println("Your Parcel Volume Is: " + parcel.calculateVolume() + " inches^3");
+                } catch (Exception e) {
+                    System.out.println("!!! Wrong entry !!!");
+                }
+            }
+            // ORDER CREATION
+            Order order = null;
+            while (!exit && !orderCreation) {
+                try {
+                    boolean express = Input.getBoolean("\nPlease input \"true\" for express delivery and \"false\" for standard:");
+                    order = new Order(customer, recipient, deliveryAddress);
+                    order.setParcel(parcel);
+                    order.setStore(selectedStore);
+                    order.setExpress(express);
+                    orderCreation = true;
+                } catch (Exception e) {
+                    System.out.println("!!! Wrong entry !!!");
+                }
+            }
 
+            //INVOICE CREATION & PRINTING (Price, Lead time)
+            Discount discount = null;
+            Price price = null;
+            Invoice invoice = null;
 
-        // creating orders
-        Order order1 = new Order(customerOne, recipientOne, recipientOneAddress, parcel1, store1, false);
-        Order order2 = new Order(customerTwo, recipientTwo, recipientTwoAddress, parcel2, store2, true);
+            if (!exit) {
+                discount = new Discount(0F, customer.isVeteranStatus());
+                price = new Price(discount, order);
+                invoice = new Invoice(price);
+                System.out.println("Your Invoice: "+invoice.generateInvoice(order));
+                System.out.println("Your Delivery Time: "+Delivery.getLeadTime(order)+" Day(s)");
+            }
 
-        // creating delivery
-        Delivery delivery1 =new Delivery();
-        Delivery delivery2 =new Delivery();
+            //CHECK POINT
+            while (!exit) {
+                String proceed = Input.getString("\nPress \"OK\" to Continue OR \"EXIT\" to QUIT ");
+                if (proceed.equals("EXIT")) {
+                    exit = true;
+                    System.out.println("Goodbye!");
+                } else if (proceed.equals("OK")) {
+                    break;
+                } else {
+                    System.out.println("!!! Wrong entry !!!");
+                }
+            }
 
-        // getting lead time
-        System.out.println(delivery1.getLeadTime(order1)+ " leadtime");
-        System.out.println(delivery2.getLeadTime(order2)+ " leadtime");
+            while (!exit && !paymentProcessing) {
+                try {
+                    long cardNumber = Input.getLong("\nPlease input your 16 digits card number (do not separate digits by spaces):");
+                    Processing.processPayment(cardNumber, invoice);
+                    System.out.println("Thank you for your payment!");
+                    System.out.println("Your Invoice: "+invoice.generateInvoice(order));
+                    paymentProcessing = true;
+                } catch (Exception e) {
+                    System.out.println("!!! Wrong entry !!!");
+                }
 
-        //creating discounts
-        Discount discount1 = new Discount(0,customerOne.isVeteranStatus());
-        Discount discount2 = new Discount(0.05F,customerTwo.isVeteranStatus());
-
-        System.out.println(discount1.getTotalDiscount()+ " total discount");
-        System.out.println(discount2.getTotalDiscount()+ " total discount");
-
-        // creating prices
-        Price price1 = new Price(discount1, order1);
-        Price price2 = new Price(discount2, order2);
-
-        System.out.println(price1.getTotalPrice()+ " total price");
-        System.out.println(price2.getTotalPrice()+ " total price");
-
-        // creating invoices
-        Invoice invoice1 = new Invoice(price1);
-        Invoice invoice2 = new Invoice(price2);
-
-        System.out.println(invoice1.generateInvoice(order1)+ " invoice");
-        System.out.println(invoice2.generateInvoice(order2)+ " invoice");
-
-        // payment processing
-        Processing.processPayment(1111111111111111L, invoice1);
-        // throws exception
-//        Processing.processPayment(111111111111111L, invoice2);
-
-        // validating new invoice payment status
-        System.out.println(invoice1.generateInvoice(order1)+ " invoice");
-        System.out.println(invoice2.generateInvoice(order2)+ " invoice");
+            }
+            exit = true;
+            System.out.println("--------------------------------------------------------");
+            Input.close();
+        }
     }
 }

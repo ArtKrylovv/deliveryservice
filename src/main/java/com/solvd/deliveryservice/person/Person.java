@@ -1,5 +1,6 @@
 package com.solvd.deliveryservice.person;
 
+import com.solvd.deliveryservice.exceptions.PersonNameException;
 import com.solvd.deliveryservice.payment.Processing;
 import com.solvd.deliveryservice.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
@@ -19,12 +20,15 @@ public abstract class Person implements Id {
             this.firstName = firstName;
         } else {
             LOGGER.error("First Name must contain characters only");
+            throw new PersonNameException("First Name must contain characters only");
         }
 
         if (Utilities.nameChecker(lastName)) {
             this.lastName = lastName;
         } else {
             LOGGER.error("First Name must contain characters only");
+            throw new PersonNameException("First Name must contain characters only");
+
         }
 
         this.phone = phone;
@@ -43,19 +47,29 @@ public abstract class Person implements Id {
     }
 
     public void setFirstName(String firstName) {
-
-        this.firstName = firstName;
+        if (Utilities.nameChecker(firstName)) {
+            this.firstName = firstName;
+        } else {
+            LOGGER.error("First Name must contain characters only");
+            throw new PersonNameException("First Name must contain characters only");
+        }
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (Utilities.nameChecker(lastName)) {
+            this.lastName = lastName;
+        } else {
+            LOGGER.error("Last Name must contain characters only");
+            throw new PersonNameException("Last Name must contain characters only");
+        }
     }
+
 
     public void setPhone(long phone) {
         this.phone = phone;
     }
     // abstract method
-    public abstract HashMap<String, Object> getInfo();
+    public abstract HashMap<String, String> getInfo();
 }
 
 

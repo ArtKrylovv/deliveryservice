@@ -86,3 +86,69 @@ Discount
 Processing
 Person
 Physical/Online Store
+
+
+//////////////////
+
+Console flow
+(loop, errors, exit, check info - ok)
+
+create stores
+P greeting, select store
+> store selection
+P if store is working today (create Utility method)
+
+P input name
+> name
+
+
+P input recipient name
+> recipient name
+
+P veteran status
+> veteran status
+
+P input sender address
+> sender address
+
+P confirm address, OK to continue
+> set boolean true
+
+P input recipient address
+> recipient address
+
+P input parcel info
+> parcel inf
+
+P parcel Volume
+
+P express
+> express
+
+P total, lead, OK to continue
+> set boolean true
+
+P card details
+> card
+
+P success/error
+P invoice
+set invoice to "paid"
+break
+
+https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-other-next-functions/
+
+# 5
+
+1 Reduce parameters in constructor. +++
+2 Add 5 collections to the hierarchy.+++
+
+Apartment Address +
+HouseAddress +
+Customer +
+Employee +
+Invoice (review) // check conversion to String of Linked list +
+
+3 Create custom implementation of LinkedList with generic and use it in your project. (WIP)
+
+===============================
