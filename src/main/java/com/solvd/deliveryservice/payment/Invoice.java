@@ -1,10 +1,9 @@
 package com.solvd.deliveryservice.payment;
 
 import com.solvd.deliveryservice.order.Order;
+import com.solvd.deliveryservice.utilities.Utilities;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class Invoice implements Document {
     public static float SALES_TAX = 0.10F;
@@ -64,15 +63,16 @@ public class Invoice implements Document {
         return totalPriceBeforeTax + taxAmount;
     }
 
-    public HashMap<String, Object> generateInvoice(Order order) {
-        HashMap<String, Object> invoice = new HashMap<>();
-        invoice.put("Price before tax (usd)", getTotalPriceBeforeTax());
-        invoice.put("Tax amount (usd)", getTaxAmount());
-        invoice.put("Total after tax (usd)", getTotalAfterTax());
-        invoice.put("Invoice paid", isPaid());
+    public HashMap<String, String> generateInvoice(Order order) {
+        HashMap<String, String> invoice = new HashMap<>();
+        invoice.put("Price before tax (usd)", Float.toString(getTotalPriceBeforeTax()));
+        invoice.put("Tax amount (usd)", Float.toString(getTaxAmount()));
+        invoice.put("Total after tax (usd)", Float.toString(getTotalAfterTax()));
+        invoice.put("Invoice paid", Boolean.toString(isPaid()));
         invoice.put("Invoice ID", getId());
         // polymorphism in getFullAddress()
-        invoice.put("Delivery address", Arrays.toString(order.getAddress().getFullAddress()));
+        String fullAddress = Utilities.ArrayListToString(order.getAddress().getFullAddress());
+        invoice.put("Delivery address", fullAddress);
         return invoice;
     }
 

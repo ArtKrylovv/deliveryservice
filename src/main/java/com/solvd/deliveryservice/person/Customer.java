@@ -8,10 +8,9 @@ public class Customer extends Person {
     private boolean veteranStatus;
 
     // reduce arguments to 3 max
-    public Customer(String firstName, String lastName, long phone, boolean veteranStatus) {
+    public Customer(String firstName, String lastName, long phone) {
         super(firstName, lastName, phone);
         this.id = generateId();
-        this.veteranStatus= veteranStatus;
     }
 
     public String getId() {
@@ -39,13 +38,13 @@ public class Customer extends Person {
     }
 
     @Override
-    public HashMap<String, Object> getInfo() {
-        HashMap<String, Object> info = new HashMap<>();
+    public HashMap<String, String> getInfo() {
+        HashMap<String, String> info = new HashMap<>();
         info.put("fist name", getFirstName());
         info.put("last name", getLastName());
-        info.put("phone", getPhone());
+        info.put("phone", Long.toString(getPhone()));
         info.put("id", getId());
-        info.put("veteran status", isVeteranStatus());
+        info.put("veteran status", Boolean.toString(isVeteranStatus()));
         return info;
     }
 }

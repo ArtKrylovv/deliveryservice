@@ -6,6 +6,8 @@ import com.solvd.deliveryservice.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+
 public abstract class Address {
     final public static String LOCAL_STATE = "CA";
     private String street;
@@ -73,6 +75,6 @@ public abstract class Address {
         return state.equals(LOCAL_STATE);
     }
     // abstract
-    public abstract String[] getFullAddress();
+    public abstract ArrayList<String > getFullAddress();
 }
 

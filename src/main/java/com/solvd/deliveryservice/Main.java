@@ -17,6 +17,7 @@ import com.solvd.deliveryservice.person.Recipient;
 import com.solvd.deliveryservice.store.OnlineStore;
 import com.solvd.deliveryservice.store.PhysicalStore;
 
+import java.awt.*;
 import java.time.DayOfWeek;
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -33,7 +34,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         LOGGER.info("Starting service");
 
         // existing stores
@@ -43,10 +43,11 @@ public class Main {
         PhysicalStore store1 = new PhysicalStore(storeOneAddress);
         PhysicalStore store2 = new PhysicalStore(storeTwoAddress);
 
-        // let's user to exit console app
+        // enables user to exit console app
         boolean exit = false;
 
         // console block
+        //TODO: Add InvalidNameException, NegativeTesting, Refactoring
         while (!exit) {
 
             boolean storeSelection = false;
@@ -68,7 +69,7 @@ public class Main {
 
             while (!exit && !storeSelection) {
 
-                String selectedStoreNumber = Input.getString("#1 " + Arrays.toString(store1.getAddress().getFullAddress()) + "\n#2 " + Arrays.toString(store2.getAddress().getFullAddress()));
+                String selectedStoreNumber = Input.getString("#1 " + Utilities.ArrayListToString(store1.getAddress().getFullAddress()) + "\n#2 " + Utilities.ArrayListToString(store2.getAddress().getFullAddress()));
 
                 if (selectedStoreNumber.equals("Exit")) {
                     exit = true;
@@ -95,7 +96,8 @@ public class Main {
                     String customerLastName = Input.getString("Please input your LAST NAME:");
                     long customerPhone = Input.getLong("Please input your PHONE (numbers only):");
                     boolean veteranStatus = Input.getBoolean("Please input \"true\" if you are a veteran and \"false\" if not:");
-                    customer = new Customer(customerFirstName, customerLastName, customerPhone, veteranStatus);
+                    customer = new Customer(customerFirstName, customerLastName, customerPhone);
+                    customer.setVeteranStatus(veteranStatus);
                     userCreation = true;
                 } catch (Exception e) {
                     System.out.println("!!! Wrong entry !!!");
@@ -148,7 +150,8 @@ public class Main {
                         int apt = Input.getInt("Please input apartment #:");
                         String city = Input.getString("Please input city:");
                         String state = Input.getString("Please input state, e.g \"CA\" for California:");
-                        deliveryAddress = new ApartmentAddress(street, house, apt, city, state);
+                        deliveryAddress = new ApartmentAddress(street, house, city, state);
+                        ((ApartmentAddress) deliveryAddress).setAptNumber(apt);
                         deliveryAddressCreation = true;
                     } catch (Exception e) {
                         System.out.println("!!! Wrong entry !!!");
@@ -181,7 +184,10 @@ public class Main {
             while (!exit && !orderCreation) {
                 try {
                     boolean express = Input.getBoolean("\nPlease input \"true\" for express delivery and \"false\" for standard:");
-                    order = new Order(customer, recipient, deliveryAddress, parcel, selectedStore, express);
+                    order = new Order(customer, recipient, deliveryAddress);
+                    order.setParcel(parcel);
+                    order.setStore(selectedStore);
+                    order.setExpress(express);
                     orderCreation = true;
                 } catch (Exception e) {
                     System.out.println("!!! Wrong entry !!!");
@@ -216,9 +222,9 @@ public class Main {
 
             while (!exit && !paymentProcessing) {
                 try {
-                    long cardNumber = Input.getLong("\nPlease input your 16 digits card number (do not separate digits by spaces)");
+                    long cardNumber = Input.getLong("\nPlease input your 16 digits card number (do not separate digits by spaces):");
                     Processing.processPayment(cardNumber, invoice);
-                    System.out.println("Thank you for your payment");
+                    System.out.println("Thank you for your payment!");
                     System.out.println("Your Invoice: "+invoice.generateInvoice(order));
                     paymentProcessing = true;
                 } catch (Exception e) {

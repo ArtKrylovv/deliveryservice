@@ -3,6 +3,7 @@ package com.solvd.deliveryservice.utilities;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public final class Utilities {
@@ -23,5 +24,18 @@ public final class Utilities {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
+
+    public static String ArrayListToString(ArrayList<String> ArrayList) {
+        String name = "";
+        for (int i = 0; i < ArrayList.size(); i++) {
+            if (i == ArrayList.size() - 1) {
+                name += ArrayList.get(i);
+            } else {
+                name += ArrayList.get(i) + ", ";
+            }
+        }
+        return name;
+    }
 }
+
 

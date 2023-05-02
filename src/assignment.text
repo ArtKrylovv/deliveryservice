@@ -138,3 +138,17 @@ break
 
 https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-other-next-functions/
 
+# 5
+
+1 Reduce parameters in constructor. +++
+2 Add 5 collections to the hierarchy.+++
+
+Apartment Address +
+HouseAddress +
+Customer +
+Employee +
+Invoice (review) // check conversion to String of Linked list +
+
+3 Create custom implementation of LinkedList with generic and use it in your project. (WIP)
+
+===============================

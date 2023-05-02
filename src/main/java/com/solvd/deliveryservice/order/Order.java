@@ -61,6 +61,18 @@ public class Order implements Id {
         this.delivered = delivered;
     }
 
+    public void setParcel(Parcel parcel) {
+        this.parcel = parcel;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String generateId() {
         Random random = new Random();
         long currentTime = System.currentTimeMillis();
@@ -68,15 +80,27 @@ public class Order implements Id {
         return Long.toString(currentTime+ randomInt);
     }
 
+
+
     // reduce arguments to 3 max
-    public Order(Customer customer, Recipient recipient, Address address, Parcel parcel, Store store, boolean express) {
-        this.customer = customer;
-        this.recipient = recipient;
-        this.address = address;
-        this.parcel = parcel;
-        this.store = store;
-        this.id = generateId();
-        this.express = express;
-        this.delivered = false;
+//    public Order(Customer customer, Recipient recipient, Address address, Parcel parcel, Store store, boolean express) {
+//        this.customer = customer;
+//        this.recipient = recipient;
+//        this.address = address;
+//        this.parcel = parcel;
+//        this.store = store;
+//        this.id = generateId();
+//        this.express = express;
+//        this.delivered = false;
+//    }
+
+        public Order(Customer customer, Recipient recipient, Address address) {
+            this.customer = customer;
+            this.recipient = recipient;
+            this.address = address;
+            this.delivered = false;
     }
 }
+
+
+
