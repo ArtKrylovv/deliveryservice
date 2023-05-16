@@ -1,21 +1,23 @@
 package com.solvd.deliveryservice.parcel;
 
-import com.solvd.deliveryservice.address.Address;
 import com.solvd.deliveryservice.exceptions.ParcelDimensionsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Parcel {
     private String description;
     private int weight;
-    private int[] dimensions;
+    private List<Integer> dimensionsList;
     private final static Logger LOGGER = LogManager.getLogger(Parcel.class);
 
-    public Parcel(String description, int weight, int[] dimensions) {
+    public Parcel(String description, int weight, List<Integer> dimensions) {
         this.description = description;
         this.weight = weight;
         if(dimensionsChecker(dimensions)) {
-            this.dimensions = dimensions;
+            this.dimensionsList = dimensions;
         }else {
             LOGGER.error("All dimensions must be positive integers");
             throw new ParcelDimensionsException("All dimensions must be positive integers");
@@ -31,8 +33,8 @@ public class Parcel {
         return weight;
     }
 
-    public int[] getDimensions() {
-        return dimensions;
+    public List<Integer> getDimensionsList() {
+        return dimensionsList;
     }
 
     public void setDescription(String description) {
@@ -43,31 +45,24 @@ public class Parcel {
         this.weight = weight;
     }
 
-    public void setDimensions(int[] dimensions) {
-        if(dimensionsChecker(dimensions)) {
-            this.dimensions = dimensions;
+    public void setDimensionsList(List<Integer> dimensionsList) {
+        if(dimensionsChecker(dimensionsList)) {
+            this.dimensionsList = dimensionsList;
         }else{
             LOGGER.error("All dimensions must be positive integers");
             throw new ParcelDimensionsException("All dimensions must be positive integers");
         }
     }
 
-    // this method calculates parcel physical volume
-    public int calculateVolume() {
-        int volume = 1;
-        for (int i : dimensions) {
-            volume *= i;
-        }
-        return volume;
+    // utilizes stream reduce()
+    public int calculateVolume(){
+        return dimensionsList.stream().reduce((accumulator, x)->accumulator*x).get();
     }
 
-    private boolean dimensionsChecker (int[] dimensions) {
-        boolean status = true;
-        for (int dimension : dimensions) {
-            if (dimension <= 0) {
-                status = false;
-            }
-        }
+    // utilizes stream filter()
+    private boolean dimensionsChecker (List<Integer> dimensionsList){
+        List<Integer> filteredList = dimensionsList.stream().filter((el-> el<0)).collect(Collectors.toList());
+        boolean status = filteredList.size()==0;
         return status;
     }
 }

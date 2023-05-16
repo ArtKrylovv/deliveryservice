@@ -39,7 +39,6 @@ public class Order implements Id {
         return store;
     }
 
-
     public boolean isExpress() {
         return express;
     }
@@ -51,7 +50,6 @@ public class Order implements Id {
     public String getId() {
         return id;
     }
-
 
     public void setExpress(boolean express) {
         this.express = express;
