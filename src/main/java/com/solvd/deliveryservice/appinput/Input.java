@@ -1,4 +1,4 @@
-package com.solvd.deliveryservice.input;
+package com.solvd.deliveryservice.appinput;
 
 import java.util.Scanner;
 

@@ -1,5 +1,6 @@
 package com.solvd.deliveryservice.payment;
 
+import com.solvd.deliveryservice.address.Address;
 import com.solvd.deliveryservice.order.Order;
 import com.solvd.deliveryservice.utilities.Utilities;
 
@@ -70,8 +71,8 @@ public class Invoice implements Document {
         invoice.put("Total after tax (usd)", Float.toString(getTotalAfterTax()));
         invoice.put("Invoice paid", Boolean.toString(isPaid()));
         invoice.put("Invoice ID", getId());
-        // polymorphism in getFullAddress()
-        String fullAddress = Utilities.ArrayListToString(order.getAddress().getFullAddress());
+        Address address = order.getAddress();
+        String fullAddress = address.getHouseNumber()+" "+address.getStreet()+" "+ address.getCity()+" "+address.getState();
         invoice.put("Delivery address", fullAddress);
         return invoice;
     }
@@ -86,5 +87,13 @@ public class Invoice implements Document {
         long currentTime = System.currentTimeMillis();
         int randomInt = random.nextInt(10000);
         return "I" + currentTime + randomInt;
+    }
+
+    @Override
+    public String toString(){
+        return "Invoice {"+
+                "ID "+id+" "+
+                "Total before tax "+totalPriceBeforeTax+" "+
+                "Total after tax " + totalAfterTax +"}";
     }
 }

@@ -1,6 +1,5 @@
 package com.solvd.deliveryservice.address;
 
-import com.solvd.deliveryservice.Main;
 import com.solvd.deliveryservice.exceptions.StateNameException;
 import com.solvd.deliveryservice.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
@@ -74,7 +73,5 @@ public abstract class Address {
         }
         return state.equals(LOCAL_STATE);
     }
-    // abstract
-    public abstract ArrayList<String > getFullAddress();
 }
 

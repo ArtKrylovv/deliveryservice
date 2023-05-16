@@ -47,4 +47,8 @@ public class Customer extends Person {
         info.put("veteran status", Boolean.toString(isVeteranStatus()));
         return info;
     }
+    @Override
+    public String toString(){
+        return "Customer "+ getFirstName()+" "+ getLastName()+" "+ getPhone();
+    }
 }

@@ -36,5 +36,10 @@ public class Employee extends Person {
         info.put("id", getId());
         return info;
     }
+
+    @Override
+    public String toString() {
+        return null;
+    }
 }
 

@@ -70,6 +70,9 @@ public abstract class Person implements Id {
     }
     // abstract method
     public abstract HashMap<String, String> getInfo();
+
+    @Override
+    public abstract String toString();
 }
 
 
