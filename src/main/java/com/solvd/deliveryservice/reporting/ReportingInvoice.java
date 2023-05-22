@@ -13,18 +13,18 @@ public class ReportingInvoice {
         return invoiceList;
     }
 
-    public static void addInvoice(Invoice invoice){
+    public static void addInvoice(Invoice invoice) {
         invoiceList.add(invoice);
     }
 
-
-    public static ArrayList<Invoice> filterInvoiceBy(iFilterInvoice filter){
+    public static ArrayList<Invoice> filterInvoiceBy(iFilterInvoice filter) {
         ArrayList<Invoice> filteredInvoiceList = new ArrayList<>();
-        for (Invoice i: invoiceList){
-            if(filter.filter(i)){
-                filteredInvoiceList.add(i);
+        invoiceList.forEach((Invoice invoice)->{
+            if(filter.filter(invoice)){
+                filteredInvoiceList.add(invoice);
             }
-        }
+        });
         return filteredInvoiceList;
     }
+
 }

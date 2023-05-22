@@ -38,17 +38,10 @@ public class Customer extends Person {
     }
 
     @Override
-    public HashMap<String, String> getInfo() {
-        HashMap<String, String> info = new HashMap<>();
-        info.put("fist name", getFirstName());
-        info.put("last name", getLastName());
-        info.put("phone", Long.toString(getPhone()));
-        info.put("id", getId());
-        info.put("veteran status", Boolean.toString(isVeteranStatus()));
-        return info;
-    }
-    @Override
-    public String toString(){
-        return "Customer "+ getFirstName()+" "+ getLastName()+" "+ getPhone();
+    public String toString() {
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", veteranStatus=" + veteranStatus +
+                '}';
     }
 }

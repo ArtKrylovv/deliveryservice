@@ -19,22 +19,10 @@ public final class Utilities {
     }
 
     // return current day of the week
-    public static String getDayOfTheWeek(){
+    public static String getDayOfTheWeek() {
         LocalDate date = LocalDate.now(); // get the current date
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
-    }
-
-    public static String ArrayListToString(ArrayList<String> ArrayList) {
-        String name = "";
-        for (int i = 0; i < ArrayList.size(); i++) {
-            if (i == ArrayList.size() - 1) {
-                name += ArrayList.get(i);
-            } else {
-                name += ArrayList.get(i) + ", ";
-            }
-        }
-        return name;
     }
 }
 

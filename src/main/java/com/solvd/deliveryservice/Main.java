@@ -12,14 +12,19 @@ import com.solvd.deliveryservice.payment.Price;
 import com.solvd.deliveryservice.payment.Processing;
 import com.solvd.deliveryservice.person.Customer;
 import com.solvd.deliveryservice.person.Recipient;
+import com.solvd.deliveryservice.store.PhysicalStore;
+import com.solvd.deliveryservice.store.Store;
+import com.solvd.deliveryservice.utilities.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    //TODO: word counter (done), daysOfTheWeek enum(done), loops -> stream() (done), arraylist print()(done).
 
     // creates logger
     private final static Logger LOGGER = LogManager.getLogger(Main.class);
@@ -48,6 +53,11 @@ public class Main {
 
         // delivery address
         HouseAddress deliveryAddress = new HouseAddress("Lincoln", 1000, "Los Angeles", "CA");
+
+        // store
+        Store store1 = new PhysicalStore(new HouseAddress("Broadway", 1000, "Santa Monica", "CA"));
+        // uses class type enum
+        LOGGER.info(store1.workingTodayChecker(Utilities.getDayOfTheWeek()));
 
         // parcel
         List<Integer> dimensions = new ArrayList<>();
@@ -113,7 +123,7 @@ public class Main {
 
         // filtering customers by last name
         ArrayList<Customer> filteredCustomers = ReportingCustomer.filterCustomersBy((Customer customer)->{
-            if(customer.getLastName()=="Krylov") {
+            if(customer.getLastName()=="London") {
                 return true;
             } else {
                 return  false;
@@ -134,7 +144,6 @@ public class Main {
                 return false;
             }
         });
-
        LOGGER.info(filteredInvoices);
     }
 }

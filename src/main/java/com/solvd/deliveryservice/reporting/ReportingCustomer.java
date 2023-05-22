@@ -17,14 +17,12 @@ public class ReportingCustomer {
         customerList.add(customer);
     }
 
-
     public static ArrayList<Customer> filterCustomersBy(iFilterCustomer filter){
         ArrayList<Customer> filteredCustomerList = new ArrayList<>();
-        for (Customer c: customerList){
-            if(filter.filter(c)){
-                filteredCustomerList.add(c);
-            }
-        }
+        customerList.forEach((Customer customer)-> {
+            if(filter.filter(customer)){
+                filteredCustomerList.add(customer);
+            }});
         return filteredCustomerList;
     }
 }

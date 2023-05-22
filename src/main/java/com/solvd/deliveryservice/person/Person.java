@@ -64,15 +64,9 @@ public abstract class Person implements Id {
         }
     }
 
-
     public void setPhone(long phone) {
         this.phone = phone;
     }
-    // abstract method
-    public abstract HashMap<String, String> getInfo();
-
-    @Override
-    public abstract String toString();
 }
 
 

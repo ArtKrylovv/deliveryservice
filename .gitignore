@@ -1,8 +1,7 @@
-/out
-/.idea
+out/
+.idea/
 *.iml
-/logs
-../deliveryservice/src/main/resources/text/output.txt
-../deliveryservice/src/main/resources/assignment.txt
-
+logs/
+output.txt
+target/
 

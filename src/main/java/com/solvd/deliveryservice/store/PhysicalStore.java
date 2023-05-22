@@ -1,8 +1,10 @@
 package com.solvd.deliveryservice.store;
 
 import com.solvd.deliveryservice.address.Address;
+import com.solvd.deliveryservice.enums.BusinessWeek;
 import com.solvd.deliveryservice.exceptions.InvalidDayOfTheWeekException;
 import com.solvd.deliveryservice.exceptions.InvalidDiscountException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,23 +27,44 @@ public class PhysicalStore extends Store{
     }
 
     @Override
-    public String workingTodayChecker(String currentDayOfTheWeek) {
-        if(!dayOfTheWeekChecker(currentDayOfTheWeek)){
-            LOGGER.error("Day of the week must be a string, abbreviations are not allowed");
-            throw new InvalidDayOfTheWeekException("Day of the week must be a string, abbreviations are not allowed");
+    // uses class type enum
+    public String workingTodayChecker(String day) {
+        BusinessWeek inputDay = null;
+        switch (StringUtils.upperCase(day)) {
+            case "MONDAY":
+                inputDay = BusinessWeek.MONDAY;
+                break;
+
+            case "TUESDAY":
+                inputDay = BusinessWeek.TUESDAY;
+                break;
+            case "WEDNESDAY":
+                inputDay = BusinessWeek.WEDNESDAY;
+                break;
+
+            case "THURSDAY":
+                inputDay = BusinessWeek.THURSDAY;
+                break;
+            case "FRIDAY":
+                inputDay = BusinessWeek.FRIDAY;
+                break;
+
+            case "SATURDAY":
+                inputDay = BusinessWeek.SATURDAY;
+                break;
+
+            case "SUNDAY":
+                inputDay = BusinessWeek.SUNDAY;
+                break;
         }
 
-        if(currentDayOfTheWeek.equals("Sunday")) {
-            return "Sorry, we are closed till 8 am tomorrow!";
+        if (inputDay == null) {
+            throw new InvalidDayOfTheWeekException("String type day of the week must be provided");
+        } else if (inputDay.isWorkingDay()) {
+            return "We are working today";
         } else {
-            return "We are open today!";
+            return "Sorry, we are closed today";
         }
-    }
-
-    @Override
-    public boolean dayOfTheWeekChecker(String day) {
-        String[] arrWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-        return (Arrays.asList(arrWeek).contains(day));
     }
 }
 

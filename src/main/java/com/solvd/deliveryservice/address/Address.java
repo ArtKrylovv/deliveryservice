@@ -65,13 +65,14 @@ public abstract class Address {
             throw new StateNameException("State name must be a string of 2 characters length");
         }
     }
+
     // final class
-    public final boolean checkIfLocalAddress(String state){
-        if (!Utilities.stateChecker(state)){
+    public final boolean checkIfLocalAddress(String state) {
+        if (!Utilities.stateChecker(state)) {
             LOGGER.error("State name must be a string of 2 characters length");
             throw new StateNameException("State name must be a string of 2 characters length");
         }
         return state.equals(LOCAL_STATE);
     }
-}
 
+}

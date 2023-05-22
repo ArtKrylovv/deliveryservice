@@ -29,17 +29,10 @@ public class Recipient extends Person {
     }
 
     @Override
-    public HashMap<String, String> getInfo() {
-        HashMap<String, String> info = new HashMap<>();
-        info.put("fist name", getFirstName());
-        info.put("last name", getLastName());
-        info.put("phone", Long.toString(getPhone()));
-        info.put("id", getId());
-        return info;
-    }
-
-    @Override
     public String toString() {
-        return null;
+        return "Recipient{" +
+                "id='" + id + '\'' +
+                '}';
     }
 }
+
